@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to CSS if needed -->
+    <style>
+        .error { color: red; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <form id="loginForm">
+            <label for="username">Email:</label>
+            <input type="email" id="username" name="username" required>
+            <p class="error" id="emailError"></p>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <p class="error" id="passwordError"></p>
+            
+            <button type="submit">Log In</button>
+        </form>
+        <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            // Clear previous error messages
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+
+            const email = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Email validation (checks if it's in proper format)
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!emailPattern.test(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+                event.preventDefault(); // Prevent form submission
+            }
+
+            // Password validation (at least 1 uppercase, 1 lowercase, 1 special character, and min 8 characters)
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z!@#$%^&*]{8,}$/;
+            if (!passwordPattern.test(password)) {
+                document.getElementById('passwordError').textContent = 'Password must be at least 8 characters long, contain 1 uppercase letter, 1 lowercase letter, and 1 special character.';
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    </script>
+</body>
+</html>

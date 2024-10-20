@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to CSS if needed -->
+    <style>
+        .error { color: red; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign Up</h1>
+        <form id="signUpForm">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+            <p class="error" id="firstNameError"></p>
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+            <p class="error" id="lastNameError"></p>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <p class="error" id="emailError"></p>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+            <p class="error" id="phoneError"></p>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <p class="error" id="passwordError"></p>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <p class="error" id="confirmPasswordError"></p>
+
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="login.html">Log in here</a></p>
+    </div>
+
+    <script>
+        document.getElementById('signUpForm').addEventListener('submit', function(event) {
+            // Clear previous error messages
+            document.getElementById('firstNameError').textContent = '';
+            document.getElementById('lastNameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('phoneError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('confirmPasswordError').textContent = '';
+
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            let isValid = true;
+
+            // First and last name validation (at least 2 characters, only letters)
+            const namePattern = /^[a-zA-Z]{2,}$/;
+            if (!namePattern.test(firstName)) {
+                document.getElementById('firstNameError').textContent = 'First name must be at least 2 characters long and contain only letters.';
+                isValid = false;
+            }
+            if (!namePattern.test(lastName)) {
+                document.getElementById('lastNameError').textContent = 'Last name must be at least 2 characters long and contain only letters.';
+                isValid = false;
+            }
+
+            // Email validation (checks if it's in proper format)
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!emailPattern.test(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+                isValid = false;
+            }
+
+            // Phone number validation (only digits, 10-15 characters)
+            const phonePattern = /^[0-9]{10,15}$/;
+            if (!phonePattern.test(phone)) {
+                document.getElementById('phoneError').textContent = 'Phone number must be between 10 and 15 digits.';
+                isValid = false;
+            }
+
+            // Password validation (at least 1 uppercase, 1 lowercase, 1 special character, and min 8 characters)
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z!@#$%^&*]{8,}$/;
+            if (!passwordPattern.test(password)) {
+                document.getElementById('passwordError').textContent = 'Password must be at least 8 characters long, contain 1 uppercase letter, 1 lowercase letter, and 1 special character.';
+                isValid = false;
+            }
+
+            // Confirm password validation (must match password)
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match.';
+                isValid = false;
+            }
+
+            // Prevent form submission if any validation fails
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
+
